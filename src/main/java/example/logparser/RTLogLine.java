@@ -1,7 +1,7 @@
 package example.logparser;
 
 import java.util.Date;
-import net.giorgioferrara.utilities.logparser.ILogLine;
+import now.gf.utilities.logparser.ILogLine;
 
 /**
  * This bean is an example of a <code>ILogLine<code>.

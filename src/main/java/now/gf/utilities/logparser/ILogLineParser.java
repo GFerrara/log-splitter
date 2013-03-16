@@ -1,4 +1,4 @@
-package net.giorgioferrara.utilities.logparser;
+package now.gf.utilities.logparser;
 
 /**
  * <p>This interface describes classes that can parse a log line

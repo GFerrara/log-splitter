@@ -1,4 +1,4 @@
-package net.giorgioferrara.utilities.logparser;
+package now.gf.utilities.logparser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,7 +29,7 @@ import java.util.ServiceLoader;
  * 
  * <p>The way the real log-line-parser class is tied together with this splitter
  * is by mean of the 
- * <code>META-INF/services/net.giorgioferrara.utilities.logparser.ILogLineParser</code>
+ * <code>META-INF/services/now.gf.utilities.logparser.ILogLineParser</code>
  * file: here the concrete implementation of the <code>ILogLineParser</code>
  * to use has to be defined.</p>
  * 

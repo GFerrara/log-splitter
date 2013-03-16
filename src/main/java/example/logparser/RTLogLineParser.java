@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import net.giorgioferrara.utilities.logparser.ILogLine;
-import net.giorgioferrara.utilities.logparser.ILogLineParser;
+import now.gf.utilities.logparser.ILogLine;
+import now.gf.utilities.logparser.ILogLineParser;
 
 /**
  * This class is an example of <code>ILogLineParser</code>.

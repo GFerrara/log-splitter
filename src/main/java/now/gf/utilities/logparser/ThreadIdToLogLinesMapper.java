@@ -1,4 +1,4 @@
-package net.giorgioferrara.utilities.logparser;
+package now.gf.utilities.logparser;
 
 import java.util.ArrayList;
 import java.util.Collections;
