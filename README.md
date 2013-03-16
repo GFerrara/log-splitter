@@ -11,6 +11,7 @@ How it works? Very easily.
   you can describe it as `timestamp` `log level` `[other info]` `(thread id)` `message`
 * Now build a class that implements the `ILogParser` interface. That class will have the responsibility to parse the log line described before
 * Finally link the class that implements the `ILogParser` interface to the log splitter. This is accomplished by editing the file `META-INF\services\now.gf.utilities.logparser.ILogLineParser`: open it and simply write your parser class.
+* And now... break up your log file! How? Just run the Java app `LogSplitter` passing the full log file path name as a parameter.
 
 The project already comes with an example. Take a look at the `example.logparser` package for more details.
 
