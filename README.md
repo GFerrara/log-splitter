@@ -12,6 +12,6 @@ How it works? Very easily.
 * Now build a class that implements the `ILogParser` interface. That class will have the responsibility to parse the log line described before
 * Finally link the class that implements the `ILogParser` interface to the log splitter. This is accomplished by editing the file `META-INF\services\now.gf.utilities.logparser.ILogLineParser`: open it and simply write your parser class.
 
-The project already comes with an example. Take a look at the `example.logparser` package.
+The project already comes with an example. Take a look at the `example.logparser` package for more details.
 
 Hope this help.
