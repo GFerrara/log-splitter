@@ -8,30 +8,51 @@ import now.gf.utilities.logparser.ILogLine;
 import now.gf.utilities.logparser.ILogLineParser;
 
 /**
- * This class is an example of <code>ILogLineParser</code>.
+ * <p>This class is an example of <code>ILogLineParser</code>. The
+ * class has been conceived to be a base class that provides a <code>parse</code>
+ * method facility that contains the main logic for converting a log line to
+ * a <code>ILogLine</code> class.</p>
+ * 
+ * <p>Children classes have to define their own log line pattern as well as 
+ * positions for key log entities (timestamp, thread id and so on)</p>
  * 
  * @author Giorgio Ferrara
  */
-public class RTLogLineParser implements ILogLineParser{
-    private static final Pattern LOG_LINE_PATTERN = Pattern.compile("^(\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}\\,\\d{3})\\s+(\\w+)\\s+\\[[^\\]]+\\]\\s+\\(([^\\)]+)\\)");
-    private static final SimpleDateFormat TIMESTAMP_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+abstract class RTLogLineParser implements ILogLineParser {
+    private final Pattern LOG_LINE_PATTERN;
+    private final SimpleDateFormat TIMESTAMP_FORMATTER;
+    private final int TIMESTAMP_PATTERN_GROUP;
+    private final int LOG_LEVEL_PATTERN_GROUP;
+    private final int THREAD_ID_PATTERN_GROUP;
 
-    @Override
-    public ILogLine parse(final String line) {
-        if (line == null) return null;
-        Matcher matcher = LOG_LINE_PATTERN.matcher(line);
-        if (!matcher.find()) return null;
-        RTLogLine rtLogLine = new RTLogLine();
-        try {rtLogLine.setTimestamp(TIMESTAMP_FORMATTER.parse(matcher.group(1)));} catch (ParseException ex) {}
-        rtLogLine.setLogLevel(matcher.group(2));
-        String threadRef = matcher.group(3);
-        rtLogLine.setThreadId(threadRef);
-        rtLogLine.setMessage(line.substring(matcher.end()).trim());
-        return rtLogLine;
+    public RTLogLineParser() {
+        this.LOG_LINE_PATTERN = getLogLinePattern();
+        this.TIMESTAMP_FORMATTER = getTimestampFormatter();
+        this.TIMESTAMP_PATTERN_GROUP = getTimestampPatternGroup();
+        this.LOG_LEVEL_PATTERN_GROUP = getLogLevelPatternGroup();
+        this.THREAD_ID_PATTERN_GROUP = getThreadIdPatternGroup();
     }
+
+    abstract Pattern getLogLinePattern();
     
-    public static void main (String[] args) {
-        ILogLineParser logLineParser = new RTLogLineParser();
-        logLineParser.parse("2013-03-07 11:46:22,099 INFO  [STDOUT] (ajp-0.0.0.0-8009-2191) Hibernate: select * from table");
-    }
+    abstract SimpleDateFormat getTimestampFormatter();
+    
+    abstract int getTimestampPatternGroup();
+    
+    abstract int getLogLevelPatternGroup();
+    
+    abstract int getThreadIdPatternGroup();
+    
+    public ILogLine parse(final String line) {
+       if (line == null) return null;
+       Matcher matcher = LOG_LINE_PATTERN.matcher(line);
+       if (!matcher.find()) return null;
+       RTLogLine rtLogLine = new RTLogLine();
+       try {rtLogLine.setTimestamp(TIMESTAMP_FORMATTER.parse(matcher.group(TIMESTAMP_PATTERN_GROUP)));} catch (ParseException ex) {}
+       rtLogLine.setLogLevel(matcher.group(LOG_LEVEL_PATTERN_GROUP));
+       String threadRef = matcher.group(THREAD_ID_PATTERN_GROUP);
+       rtLogLine.setThreadId(threadRef);
+       rtLogLine.setMessage(line.substring(matcher.end()).trim());
+       return rtLogLine;
+   }
 }
